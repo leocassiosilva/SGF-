@@ -31,10 +31,10 @@
 					<div class="form-group col-md-6">
 						<label for="nome">Departamento</label> <input type="text"
 							class="form-control" id="nome" placeholder="Nome Departamento"
-							autofocus="autofocus" name="nome" />
+							autofocus="autofocus" name="nome" th:field="*{nome}"/>
 					</div>
 				</div>
-				<input type="hidden" id="id" />
+				<input type="hidden" id="id" th:field="*{id}"/>
 				<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 			</form>
 		</div>
