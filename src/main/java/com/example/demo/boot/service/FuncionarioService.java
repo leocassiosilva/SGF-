@@ -16,4 +16,6 @@ public interface FuncionarioService {
 
 	List<Funcionario> buscarTodos();
 
+	List<Funcionario> buscarPorNome(String nome);
+
 }

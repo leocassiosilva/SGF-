@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.boot.domain.Cargo;
@@ -68,6 +69,13 @@ public class FuncionarioController {
 		attr.addAttribute("sucess", "Funcionario excluido com sucesso!"); 
 		return "redirect:/funcionarios/listar";
 	}
+	
+	@GetMapping("/buscar/nome")
+	public String getPorNome(@RequestParam("nome") String nome, ModelMap model) {
+		model.addAttribute("funcionario", funcionarioService.buscarPorNome(nome));
+		return "redirect:/funcionarios/listar";
+	}
+	
 	
 	@ModelAttribute("cargos")
 	public List<Cargo> getCargos(){
