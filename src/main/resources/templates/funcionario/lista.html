@@ -59,8 +59,7 @@
 								<select class="form-control mr-sm-2" th:name="id"
 									aria-label="Search">
 									<option value="">Cargo</option>
-									<option th:each="c = ${cargos}" th:value="${c.id}" th:text="${c.nome}">Auxiliar Contábil</option>
-									
+									<option th:each="c : ${cargos}" th:value="${c.id}" th:text="${c.nome}">Auxiliar Contábil</option>
 								</select>
 								<button class="btn btn-outline-success my-2 my-sm-0">Search</button>
 							</form>
@@ -75,11 +74,11 @@
 
 						<nav class="navbar navbar-light bg-light">
 							<form class="form-inline" method="GET"
-								action="/funcionarios/buscar/data">
+								th:action="@{/funcionarios/buscar/data}">
 								<input class="form-control mr-sm-2" type="date"
-									aria-label="Search" name="entrada" /> <input
+									aria-label="Search" th:name="entrada" /> <input
 									class="form-control mr-sm-2" type="date" aria-label="Search"
-									name="saida" />
+									th:name="saida" />
 								<button class="btn btn-outline-success my-2 my-sm-0">Search</button>
 							</form>
 						</nav>
