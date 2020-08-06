@@ -2,9 +2,12 @@ package com.example.demo.boot.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,14 +38,19 @@ public class CargoController {
 	
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
-		model.addAttribute("cargos", cargoService.buscarTodos());
+		model.addAttribute("cargos", cargoService.buscarTodos()); 
 		return "cargo/lista";
 	}
 	
 	
 	@PostMapping("/salvar")
-	private String salvar(Cargo cargo) {
+	private String salvar(@Valid Cargo cargo,  BindingResult result, RedirectAttributes attr) {
+		if (result.hasErrors()) {
+			return "/cargo/cadastro";
+		}
+		
 		cargoService.salvar(cargo);
+		attr.addAttribute("sucess", "Cargo cadastrado com sucesso!");
 		return "redirect:/cargos/cadastrar";
 	}
 	
@@ -59,7 +67,12 @@ public class CargoController {
 	}
 	
 	@PostMapping("/editar")
-	public String editar(Cargo cargo, RedirectAttributes attr) {
+	public String editar(@Valid  Cargo cargo, BindingResult result, RedirectAttributes attr) {
+		
+		if (result.hasErrors()) {
+			return "/cargo/cadastro";
+		}
+		
 		cargoService.editar(cargo);
 		attr.addFlashAttribute("sucess","Cargo atualizado com sucesso!");
 		return "redirect:/cargos/cadastrar";
@@ -71,7 +84,7 @@ public class CargoController {
 			attr.addFlashAttribute("fail", "Cargo não excluido. Tem funcionario!");
 		}else {
 			cargoService.excluir(id);
-			attr.addFlashAttribute("Sucess", "Cargo excluido com sucesso!");
+			attr.addFlashAttribute("sucess", "Cargo excluido com sucesso!");
 		}
 		return  "redirect:/cargos/listar";
 	}
